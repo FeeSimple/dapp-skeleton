@@ -45,7 +45,7 @@ EosHandler.getTable = function (req, res, next) {
   eosClient.getTableRows(true, contractAccount.name, contractAccount.name, tableName)
       .then((data) => {
         console.log(data);
-        res.send(data)
+        res.send(data.rows)
       })
       .catch((err) => {  
         console.log(err)
@@ -55,11 +55,12 @@ EosHandler.getTable = function (req, res, next) {
 
 EosHandler.createItem = function (req, res, next) {
   var token = req.headers['feesimple-token']
+  // console.log('createItem - headers: ', req.headers);
   if (token !== 'fst')
     return res.status(500).send()
 
-  let itemId = parseInt(req.body.id)
-  let itemDesc = req.body.desc
+  let itemId = parseInt(req.body.itemId)
+  let itemDesc = req.body.itemDesc
 
   console.log('EosHandler - createItem (id:', itemId, ', description: ', itemDesc, ')')
   eosClient.contract(contractAccount.name).then((contract) => {
@@ -84,7 +85,7 @@ EosHandler.completeItem = function (req, res, next) {
   if (token !== 'fst')
     return res.status(500).send()
 
-  let itemId = parseInt(req.body.id)
+  let itemId = parseInt(req.body.itemId)
 
   console.log('EosHandler - completeItem (id:', itemId, ')')
   eosClient.contract(contractAccount.name).then((contract) => {
@@ -108,7 +109,7 @@ EosHandler.removeItem = function (req, res, next) {
   if (token !== 'fst')
     return res.status(500).send()
 
-  let itemId = parseInt(req.body.id)
+  let itemId = parseInt(req.body.itemId)
 
   console.log('EosHandler - removeItem (id:', itemId, ')')
   eosClient.contract(contractAccount.name).then((contract) => {

@@ -1,29 +1,17 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import update from 'react-addons-update'
-// const rp = require('request-promise')
-const request = require('request')
+const rp = require('request-promise')
 
 const API_END_POINT           = 'http://localhost:3333'
-const API_HEADER_TOKEN_KEY    = 'feesimple-token'
-const API_HEADER_TOKEN_VAL    = 'fst'
-// let API_OPT                   = {
-//                                   method: 'POST',
-//                                   uri: '',
-//                                   headers: 
-//                                   {
-//                                     API_HEADER_TOKEN_KEY: API_HEADER_TOKEN_VAL,
-//                                     'Content-Type': 'application/x-www-form-urlencoded'
-//                                   },
-//                                   json: true
-//                                 }
-
-var API_OPT = {
-  url: URL,
-  headers: {
-    API_HEADER_TOKEN_KEY: API_HEADER_TOKEN_VAL
-  }
-}
+let API_OPT                   = {
+                                  uri: '',
+                                  headers: 
+                                  {
+                                    'feesimple-token': 'fst'
+                                  },
+                                  json: true
+                                }
 
 const API_GET_TABLE            = API_END_POINT + '/table'
 const API_ITEM_CREATE          = API_END_POINT + '/item/create'
@@ -70,18 +58,18 @@ class TodoList extends React.Component {
   loadTodos() {
     const TAB_NAME = 'todos'
 
-    API_OPT.url = API_GET_TABLE
-    // API_OPT.body = {
-    //   table: TAB_NAME
-    // }
+    API_OPT.uri = API_GET_TABLE
+    API_OPT.body = {
+      table: TAB_NAME
+    }
 
-    console.log('loadTodos, API_OPT: ', API_OPT);
-
-    //request.post(API_OPT, (error, response, body) => {
-
-    request.post(API_OPT, function (err,data) {
+    rp.post(API_OPT)
+      .then((data) => {
+        console.log('loadTodos - data: ', data)
         this.setState({ todos: data })
-        console.error(data)
+      })
+      .catch((e) => {
+        console.error(e)
       })
   }
 
@@ -101,7 +89,7 @@ class TodoList extends React.Component {
       itemId: id,
       itemDesc: description
     }
-    rp.get(API_OPT)
+    rp.post(API_OPT)
       .then((res) => { this.setState({ loading: false })})
       .catch((err) => { this.setState({ loading: false }); console.log(err) })
   }
@@ -122,7 +110,7 @@ class TodoList extends React.Component {
     API_OPT.body = {
       itemId: id
     }
-    rp.get(API_OPT)
+    rp.post(API_OPT)
       .then((res) => { this.setState({ loading: false }) })
       .catch((err) => { this.setState({ loading: false }); console.log(err) })
   }
@@ -134,11 +122,13 @@ class TodoList extends React.Component {
     var todoIndex = this.state.todos.findIndex((todo) => { return todo.id == id });
     this.setState({ todos: this.state.todos.filter(todo => todo.id != id) })
 
+    console.log('removeTodo - idx: ', todoIndex)
+
     API_OPT.uri = API_ITEM_REMOVE
     API_OPT.body = {
-      itemId: id
+      itemId: todoIndex
     }
-    rp.get(API_OPT)
+    rp.post(API_OPT)
       .then((res) => { this.setState({ loading: false }); })
       .catch((err) => { this.setState({ loading: false }); console.log(err) })
   }
