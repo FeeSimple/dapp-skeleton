@@ -1,7 +1,34 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import update from 'react-addons-update'
+// const rp = require('request-promise')
+const request = require('request')
 
-import update from 'react-addons-update';
+const API_END_POINT           = 'http://localhost:3333'
+const API_HEADER_TOKEN_KEY    = 'feesimple-token'
+const API_HEADER_TOKEN_VAL    = 'fst'
+// let API_OPT                   = {
+//                                   method: 'POST',
+//                                   uri: '',
+//                                   headers: 
+//                                   {
+//                                     API_HEADER_TOKEN_KEY: API_HEADER_TOKEN_VAL,
+//                                     'Content-Type': 'application/x-www-form-urlencoded'
+//                                   },
+//                                   json: true
+//                                 }
+
+var API_OPT = {
+  url: URL,
+  headers: {
+    API_HEADER_TOKEN_KEY: API_HEADER_TOKEN_VAL
+  }
+}
+
+const API_GET_TABLE            = API_END_POINT + '/table'
+const API_ITEM_CREATE          = API_END_POINT + '/item/create'
+const API_ITEM_COMPLETE        = API_END_POINT + '/item/complete'
+const API_ITEM_REMOVE          = API_END_POINT + '/item/remove'
 
 class TodoForm extends React.Component {
   constructor(props) {
@@ -42,12 +69,19 @@ class TodoList extends React.Component {
 
   loadTodos() {
     const TAB_NAME = 'todos'
-    eosClient.getTableRows(contractAccount.name, contractAccount.name, TAB_NAME)
-      .then((data) => {
+
+    API_OPT.url = API_GET_TABLE
+    // API_OPT.body = {
+    //   table: TAB_NAME
+    // }
+
+    console.log('loadTodos, API_OPT: ', API_OPT);
+
+    //request.post(API_OPT, (error, response, body) => {
+
+    request.post(API_OPT, function (err,data) {
         this.setState({ todos: data })
-        console.error(data);
-      }).catch((e) => {
-        console.error(e);
+        console.error(data)
       })
   }
 
@@ -60,15 +94,16 @@ class TodoList extends React.Component {
 
     this.setState({ todos: newTodos })
 
-    eosClient.contract(contractAccount.name).then((contract) => {
-      contract.create(
-        contractAccount.name,
-        (id),
-        description,
-        { authorization: [contractAccount.name] }
-      ).then((res) => { this.setState({ loading: false })})
+    console.log('addNewTodo - description: ', description)
+
+    API_OPT.uri = API_ITEM_CREATE
+    API_OPT.body = {
+      itemId: id,
+      itemDesc: description
+    }
+    rp.get(API_OPT)
+      .then((res) => { this.setState({ loading: false })})
       .catch((err) => { this.setState({ loading: false }); console.log(err) })
-    })
   }
 
   completeTodo(id, e) {
@@ -83,14 +118,13 @@ class TodoList extends React.Component {
       })
     })
 
-    eosClient.contract(contractAccount.name).then((contract) => {
-      contract.complete(
-        contractAccount.name,
-        (this.state.todos.length),
-        { authorization: [contractAccount.name] }
-      ).then((res) => { this.setState({ loading: false }) })
+    API_OPT.uri = API_ITEM_COMPLETE
+    API_OPT.body = {
+      itemId: id
+    }
+    rp.get(API_OPT)
+      .then((res) => { this.setState({ loading: false }) })
       .catch((err) => { this.setState({ loading: false }); console.log(err) })
-    })
   }
 
   removeTodo(id, e) {
@@ -100,14 +134,13 @@ class TodoList extends React.Component {
     var todoIndex = this.state.todos.findIndex((todo) => { return todo.id == id });
     this.setState({ todos: this.state.todos.filter(todo => todo.id != id) })
 
-    eosClient.contract(contractAccount.name).then((contract) => {
-      contract.destroy(
-        contractAccount.name,
-        (todoIndex),
-        { authorization: [contractAccount.name] }
-      ).then((res) => { this.setState({ loading: false }); })
+    API_OPT.uri = API_ITEM_REMOVE
+    API_OPT.body = {
+      itemId: id
+    }
+    rp.get(API_OPT)
+      .then((res) => { this.setState({ loading: false }); })
       .catch((err) => { this.setState({ loading: false }); console.log(err) })
-    })
   }
 
   renderTodoItem(todo) {

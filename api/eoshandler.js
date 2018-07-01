@@ -35,17 +35,21 @@ EosHandler.init = function () {
 
 EosHandler.getTable = function (req, res, next) {
   var token = req.headers['feesimple-token']
-  if (token !== 'fst')
-    return res.status(500).send()
+  // if (token !== 'fst')
+  //   return res.status(500).send()
 
   let tableName = req.body.table
   console.log('EosHandler - getTable: ', tableName)
-  eosClient.getTableRows(false, contractAccount.name, contractAccount.name, tableName)
+
+  // For the first para (named "json"), set to true to receive full JSON-encoded returned result
+  eosClient.getTableRows(true, contractAccount.name, contractAccount.name, tableName)
       .then((data) => {
+        console.log(data);
         res.send(data)
-      }).catch((e) => {
-        console.error(e)
-        return res.status(500).send()
+      })
+      .catch((err) => {  
+        console.log(err)
+        res.send(err)
       })
 }
 
@@ -64,8 +68,62 @@ EosHandler.createItem = function (req, res, next) {
       itemId,
       itemDesc,
       { authorization: [contractAccount.name] }
-    ).then((res) => {  console.log(res) })
-    .catch((err) => {  console.log(err) })
+    ).then((data) => {  
+      console.log(data) 
+      res.send(data.transaction_id)
+    })
+    .catch((err) => {  
+      console.log(err)
+      res.send(err)
+    })
+  })
+}
+
+EosHandler.completeItem = function (req, res, next) {
+  var token = req.headers['feesimple-token']
+  if (token !== 'fst')
+    return res.status(500).send()
+
+  let itemId = parseInt(req.body.id)
+
+  console.log('EosHandler - completeItem (id:', itemId, ')')
+  eosClient.contract(contractAccount.name).then((contract) => {
+    contract.complete(
+      contractAccount.name,
+      itemId,
+      { authorization: [contractAccount.name] }
+    ).then((data) => {  
+      console.log(data) 
+      res.send(data.transaction_id)
+    })
+    .catch((err) => {  
+      console.log(err)
+      res.send(err)
+    })
+  })
+}
+
+EosHandler.removeItem = function (req, res, next) {
+  var token = req.headers['feesimple-token']
+  if (token !== 'fst')
+    return res.status(500).send()
+
+  let itemId = parseInt(req.body.id)
+
+  console.log('EosHandler - removeItem (id:', itemId, ')')
+  eosClient.contract(contractAccount.name).then((contract) => {
+    contract.destroy(
+      contractAccount.name,
+      itemId,
+      { authorization: [contractAccount.name] }
+    ).then((data) => {  
+      console.log(data) 
+      res.send(data.transaction_id)
+    })
+    .catch((err) => {  
+      console.log(err)
+      res.send(err)
+    })
   })
 }
 

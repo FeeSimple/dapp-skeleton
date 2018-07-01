@@ -8,5 +8,8 @@ module.exports = {
   resolve: { extensions: ['*', '.js', '.jsx'] },
   output: { path: __dirname + '/dist', publicPath: '/', filename: 'bundle.js' },
   plugins: [ new webpack.HotModuleReplacementPlugin() ],
-  devServer: { contentBase: './dist', hot: true }
+  devServer: { contentBase: './dist', hot: true },
+  node: {
+    fs: 'empty'
+  }
 };
