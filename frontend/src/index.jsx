@@ -1,32 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import EOS from 'eosjs'
+
 import update from 'react-addons-update';
-
-// Define the account used to deploy the contract.
-// This account will be used to reference the contract.
-const contractAccount = {
-    name: 'useraaaaaaaa',
-    privKey: '5JtUScZK2XEp3g9gh7F8bwtPTRAkASmNrrftmx4AxDKD5K4zDnr'
-}
-
-// Define the local nodeos endpoint connected to the remote testnet blockchain
-const localNodeos = 'http://127.0.0.1:8877'
-
-// Basic configuration of the EOS client
-const config = {
-    chainId: '1c6ae7719a2a3b4ecb19584a30ff510ba1b6ded86e1fd8b8fc22f1179c622a32',
-    keyProvider: contractAccount.privKey,
-    httpEndpoint: localNodeos,
-
-    expireInSeconds: 60,
-    broadcast: true,
-    debug: false, // set to true for debugging the transaction
-    sign: true
-}
-
-// Instantiate the EOS client used for blockchain/contract interaction
-const eosClient = EOS(config)
 
 class TodoForm extends React.Component {
   constructor(props) {

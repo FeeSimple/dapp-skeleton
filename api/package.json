@@ -1,0 +1,25 @@
+{
+  "name": "dapp-skeleton",
+  "version": "1.0.0",
+  "description": "## Introduction",
+  "main": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FeeSimple/dapp-skeleton.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FeeSimple/dapp-skeleton/issues"
+  },
+  "homepage": "https://github.com/FeeSimple/dapp-skeleton#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "eosjs": "^14.1.1",
+    "express": "^4.16.3",
+    "http": "0.0.0"
+  }
+}
