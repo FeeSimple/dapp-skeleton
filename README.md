@@ -61,10 +61,16 @@ eosClient.contract(contractAccount.name).then((contract) => {
 
 ### Part 1: frontend
 
-Implemented in ReactJS that provides a web-based frontend with contract interaction.
+Implemented in ReactJS that provides a web-based frontend.
 Via the web UI, it's possible to create new "todo" item or delete the existing "todo" item.
 
-### Part 2: contract
+### Part 2: api
+
+Implemented in NodeJS that provides rest APIs for the frontend for contract interaction.
+This API layer releases the burden of the EOS-specific handling from the frontend.
+Each API implementation is based on the "eosjs" library.
+
+### Part 3: contract
 
 Implement the smart contract functions invoked by the frontend
 
