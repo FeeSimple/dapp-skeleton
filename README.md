@@ -26,7 +26,7 @@ const contractAccount = {
 }
 
 // Define the local nodeos endpoint connected to the remote testnet blockchain
-const localNodeos = 'http://127.0.0.1:8877'
+const localNodeos = 'http://138.197.194.220:8877'
 
 // Basic configuration of the EOS client
 const config = {
@@ -84,10 +84,10 @@ https://github.com/FeeSimple/deploy_contract
 Command line for deployment is as follows:
 
 ```
-cleos --wallet-url http://localhost:6666 --url http://localhost:8877 set contract useraaaaaaaa path_to_dapp-skeleton_contract_folder path_to_dapp-skeleton_contract_folder/todo.wast path_to_dapp-skeleton_contract_folder/todo.abi
+cleos --wallet-url http://localhost:6666 --url http://138.197.194.220:8877 set contract useraaaaaaaa path_to_dapp-skeleton_contract_folder path_to_dapp-skeleton_contract_folder/todo.wast path_to_dapp-skeleton_contract_folder/todo.abi
 ```
 
 * Install with: `npm install`
 * Start up with: `npm run start`
 * Open `http://localhost:8080/`
-* Query on-chain database table: `cleos --wallet-url http://localhost:6666 --url http://localhost:8877 get table useraaaaaaaa useraaaaaaaa todos`
+* Query on-chain database table: `cleos --wallet-url http://localhost:6666 --url http://138.197.194.220:8877 get table useraaaaaaaa useraaaaaaaa todos`

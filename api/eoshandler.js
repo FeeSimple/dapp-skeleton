@@ -7,14 +7,15 @@ const contractAccount = {
   privKey: '5JtUScZK2XEp3g9gh7F8bwtPTRAkASmNrrftmx4AxDKD5K4zDnr'
 }
 
-// Define the local nodeos endpoint connected to the remote testnet blockchain
-const localNodeos = 'http://159.65.109.118:8877'
+// Define the nodeos endpoint connected to the remote testnet blockchain
+// This can be a local nodeos or running directly on the remote testnet
+const nodeosEndpoint = 'http://138.197.194.220:8877'
 
 // Basic configuration of the EOS client
 const config = {
   chainId: '1c6ae7719a2a3b4ecb19584a30ff510ba1b6ded86e1fd8b8fc22f1179c622a32',
   keyProvider: contractAccount.privKey,
-  httpEndpoint: localNodeos,
+  httpEndpoint: nodeosEndpoint,
 
   expireInSeconds: 60,
   broadcast: true,
