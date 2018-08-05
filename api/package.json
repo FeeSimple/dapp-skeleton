@@ -19,7 +19,7 @@
   "homepage": "https://github.com/FeeSimple/dapp-skeleton#readme",
   "dependencies": {
     "body-parser": "^1.18.3",
-    "eosjs": "^14.1.1",
+    "eosjs": "^15.0.6",
     "express": "^4.16.3",
     "http": "0.0.0"
   }
