@@ -3,8 +3,8 @@ const EOS = require('eosjs')
 // Define the account used to deploy the contract.
 // This account will be used to reference the contract.
 const contractAccount = {
-  name: 'useraaaaaaaa',
-  privKey: '5JtUScZK2XEp3g9gh7F8bwtPTRAkASmNrrftmx4AxDKD5K4zDnr'
+  name: 'usertrung123',
+  privKey: '5K6LU8aVpBq9vJsnpCvaHCcyYwzPPKXfDdyefYyAMMs3Qy42fUr'
 }
 
 // Define the nodeos endpoint connected to the remote testnet blockchain
