@@ -2,10 +2,9 @@
 
 ## Introduction
 
-Based on the sample code of https://github.com/eosasia/eos-todo, some needed modification
-was made so that the existing code can work with new EOSIO software version.
+Based on sample code from https://github.com/eosasia/eos-todo, modifications were made so that the existing code will work with the new EOSIO software version.
 
-It demonstrates CRUD operation of data against EOS blochchain via smart contract
+It demonstrates CRUD operation of data via smart contract.
 
 ### Required versions
 
